@@ -99,6 +99,12 @@ int main()
                     cout << "CNIC: " << product.cnic << endl;
                     cout << "Product: " << product.productName << "--" << product.productType << endl;
                     cout << "Initial Price" << product.initialPrice << endl;
+                    read >> product.cnic;
+                    read >> product.initialPrice;
+                    cout << product.no << ") Name:" << product.name << endl;
+                    cout << "CNIC: " << product.cnic << endl;
+                    cout << "Product: " << product.productName << "--" << product.productType << endl;
+                    cout << "Initial Price" << product.initialPrice << endl;
                 }
             }
             break;
