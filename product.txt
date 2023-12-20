@@ -1,12 +1,18 @@
 1
 M Zaid
-MacBook
-Laptop
-341056467654
+Car
+Automobile
+34102456576
 1200
 2
-Ali
-Iphone
-Moile
-2345675432
+Ali Hassan
+Macbook
+laptop
+343512345
+1000
+3
+Muhammad
+Phone
+phone
+3456765434
 1000

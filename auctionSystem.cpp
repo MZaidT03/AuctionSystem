@@ -13,10 +13,8 @@ struct Date
 struct ProductInfo
 {
     int no;
-    string name, productName, productType;
-    long cnic;
+    string name, productName, productType, cnic;
     float initialPrice;
-    Date addedDate;
 };
 
 void menu()
@@ -27,15 +25,19 @@ void menu()
     cout << "3. Show All Products\n";
     cout << "4. Exit\n";
 }
-
+void startAuction(ProductInfo info)
+{
+}
 int main()
 {
     ProductInfo product;
     ofstream write;
     ifstream read;
+    int find, f;
     int choice;
     do
     {
+
         menu();
         cout << "Enter your Choice: ";
         cin >> choice;
@@ -74,7 +76,39 @@ int main()
             }
             break;
         case 2:
-            cout << "Not Implemented";
+            cout << "Enter Product No for which you want to start Auction";
+            cin >> find;
+
+            read.open("product.txt");
+            if (!read.is_open())
+            {
+                cout << "File Not Opened." << endl;
+            }
+            else
+            {
+                while (!read.eof())
+                {
+                    read >> product.no;
+                    read.ignore();
+                    getline(read, product.name);
+                    getline(read, product.productName);
+                    getline(read, product.productType);
+                    read >> product.initialPrice;
+                    read.ignore();
+
+                    if (find == product.no)
+                    {
+                        f++;
+                        cout << product.no << ") Name:" << product.name << endl;
+                        cout << "CNIC: " << product.cnic << endl;
+                        cout << "Product: " << product.productName << "--" << product.productType << endl;
+                        cout << "Initial Price" << product.initialPrice << endl;
+                    }
+                }
+
+                read.close();
+            }
+
             break;
         case 3:
             read.open("product.txt");
@@ -93,13 +127,18 @@ int main()
                     getline(read, product.name);
                     getline(read, product.productName);
                     getline(read, product.productType);
-                    read >> product.cnic;
+                    getline(read, product.cnic);
                     read >> product.initialPrice;
                     cout << product.no << ") Name:" << product.name << endl;
                     cout << "CNIC: " << product.cnic << endl;
                     cout << "Product: " << product.productName << "--" << product.productType << endl;
                     cout << "Initial Price" << product.initialPrice << endl;
-                                }
+                }
+                if (f == 0)
+                {
+                    cout << "No Product Available." << endl;
+                }
+                read.close();
             }
             break;
         }
