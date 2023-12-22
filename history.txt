@@ -1,0 +1,10 @@
+0 Name: M Zaid Tahir
+Product Name: Macbook
+Product Type: Tech
+CNIC: 3410157538517
+1200
+1 Name: Sarosh Tahir
+Product Name: Samsung S23 ultra
+Product Type: Tech
+CNIC: 341045654567
+1000
