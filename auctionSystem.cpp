@@ -15,7 +15,7 @@ struct ProductInfo
 {
     int no;
     string name, productName, productType, cnic;
-    float initialPrice;
+    float initialPrice, finalPrice;
 };
 void header()
 {
@@ -34,122 +34,140 @@ void menu()
     cout << "4. Show Summary Sold Products.\n";
     cout << "5. Exit\n";
 }
-void AddProduct(ProductInfo product[])
+void AddProduct(ProductInfo info)
 {
-    product[NUM_REC].no = NUM_REC;
+    ofstream write("product.txt", ios::app);
+
+    info.no = NUM_REC;
     cin.ignore();
     cout << "Enter Your Name: ";
-    getline(cin, product[NUM_REC].name);
+    getline(cin, info.name);
     cout << "Enter Product Name: ";
-    getline(cin, product[NUM_REC].productName);
+    getline(cin, info.productName);
     cout << "Enter Product Type: ";
-    getline(cin, product[NUM_REC].productType);
+    getline(cin, info.productType);
     cout << "Enter Your CNIC: ";
-    getline(cin, product[NUM_REC].cnic);
+    getline(cin, info.cnic);
     cout << "Enter Initial: ";
-    cin >> product[NUM_REC].initialPrice;
+    cin >> info.initialPrice;
+
+    if (!write.is_open())
+    {
+        cout << "File Not Opened.";
+    }
+    else
+    {
+        write << info.no << " "
+              << info.name << endl;
+        write << info.productName << endl;
+        write << info.productType << endl;
+        write << info.cnic << endl;
+        write << info.initialPrice << endl;
+    }
     NUM_REC += 1;
 }
-void startAuction(ProductInfo info[])
+void startAuction(ProductInfo info)
 {
-    int finalPrice[40] = {0};
+    ofstream write("history.txt", ios::app);
+    ifstream read("product.txt");
+    int finalPrice;
     string productName;
     cin.ignore();
     cout << "Enter Product name for which you want to Start Auction: ";
     getline(cin, productName);
-
-    for (int i = 0; i < NUM_REC; i++)
+    if (!read.is_open())
     {
-        if (productName == info[i].productName)
+        cout << "File Not Opened.";
+    }
+    else
+    {
+        while (read >> info.no)
         {
-            cout << info[i].no << " "
-                 << "Name: " << info[i].name << endl;
-            cout << "Product Name: " << info[i].productName << endl;
-            cout << "Product Type: " << info[i].productType << endl;
-            cout << "CNIC: " << info[i].cnic << endl;
-            cout << "Initial Price: " << info[i].initialPrice << endl;
-
-            char c;
-            cout << "Are you sure you want to start Auction for this product. (Y/N)";
-            cin >> c;
-
-            if (c == 'Y' || c == 'y')
+            read.ignore();
+            getline(read, info.name);
+            getline(read, info.productName);
+            getline(read, info.productType);
+            getline(read, info.cnic);
+            read >> info.initialPrice;
+            read.ignore();
+            if (productName == info.productName)
             {
-                int j = 0;
-                int previousBid = info[i].initialPrice; // Initialize previousBid with initialPrice
+                cout << info.no << " "
+                     << "Name: " << info.name << endl;
+                cout << "Product Name: " << info.productName << endl;
+                cout << "Product Type: " << info.productType << endl;
+                cout << "CNIC: " << info.cnic << endl;
+                cout << "Initial Price: " << info.initialPrice << endl;
 
-                while (true)
+                char c;
+                cout << "Are you sure you want to start Auction for this product. (Y/N)";
+                cin >> c;
+
+                if (c == 'Y' || c == 'y')
                 {
-                    cout << "Enter Your Bid: ";
-                    cin >> finalPrice[j];
+                    int j = 0;
+                    int previousBid = info.initialPrice; // Initialize previousBid with initialPrice
 
-                    // Check if the current bid is greater than the previous bid
-                    if (finalPrice[j] <= previousBid)
+                    while (true)
                     {
-                        cout << "Bid must be greater than the previous bid. Please enter a higher bid." << endl;
-                        continue; // Continue the loop without updating previousBid
-                    }
+                        cout << "Enter Your Bid: ";
+                        cin >> finalPrice;
 
-                    cout << endl
-                         << "Current Bid is: " << finalPrice[j] << endl;
-                    cout << "Want to increase the Bid (Y/N): ";
-                    cin >> c;
-
-                    if (c == 'N' || c == 'n')
-                    {
-                        cout << "Product Sold At " << finalPrice[j] << endl;
-
-                        ofstream write("history.txt", ios::app);
-                        if (!write.is_open())
+                        // Check if the current bid is greater than the previous bid
+                        if (finalPrice <= previousBid)
                         {
-                            cout << "File Not Opened.";
-                        }
-                        else
-                        {
-                            write << info[i].no << " "
-                                  << "Name: " << info[i].name << endl;
-                            write << "Product Name: " << info[i].productName << endl;
-                            write << "Product Type: " << info[i].productType << endl;
-                            write << "CNIC: " << info[i].cnic << endl;
-                            write << info[i].initialPrice << endl;
+                            cout << "Bid must be greater than the previous bid. Please enter a higher bid." << endl;
+                            continue; // Continue the loop without updating previousBid
                         }
 
-                        break; // Exit the loop when auction is complete
+                        cout << endl
+                             << "Current Bid is: " << finalPrice << endl;
+                        cout << "Want to increase the Bid (Y/N): ";
+                        cin >> c;
+
+                        if (c == 'N' || c == 'n')
+                        {
+                            cout << "Product Sold At " << finalPrice << endl;
+                            if (!write.is_open())
+                            {
+                                cout << "File Not Opened.";
+                            }
+                            else
+                            {
+                                write << info.no << " "
+                                      << info.name << endl;
+                                write << info.productName << endl;
+                                write << info.productType << endl;
+                                write << info.cnic << endl;
+                                write << info.initialPrice << endl;
+                                write << info.finalPrice << endl;
+                            }
+
+                            break; // Exit the loop when auction is complete
+                        }
+
+                        // Update previousBid only if the current bid is greater
+                        previousBid = finalPrice;
+
+                        j++;
                     }
-
-                    // Update previousBid only if the current bid is greater
-                    previousBid = finalPrice[j];
-
-                    j++;
+                }
+                else
+                {
+                    break;
                 }
             }
             else
             {
-                break;
+                cout << "No Product Found." << endl;
             }
-        }
-        else
-        {
-            cout << "No Product Found." << endl;
         }
     }
 }
 
-void ShowAllProduct(ProductInfo product[])
+void ShowAllProduct(ProductInfo info)
 {
-    for (int i = 0; i < NUM_REC; i++)
-    {
-        cout << "\nName: " << product[i].name << endl;
-        cout << "Product Name: " << product[i].productName << endl;
-        cout << "Product Type: " << product[i].productType << endl;
-        cout << "CNIC: " << product[i].cnic << endl;
-        cout << "Initial Price: " << product[i].initialPrice << endl;
-    }
-}
-void ShowSummary()
-{
-    ProductInfo info;
-    ifstream read("history.txt");
+    ifstream read("product.txt");
     if (!read.is_open())
     {
         cout << "File Not Opened.";
@@ -168,18 +186,49 @@ void ShowSummary()
             read.ignore();
 
             cout << info.no << endl;
-            cout << info.name << endl;
-            cout << info.productName << endl;
-            cout << info.productType << endl;
-            cout << info.cnic << endl;
+            cout << "Name: " << info.name << endl;
+            cout << "Product Name: " << info.productName << endl;
+            cout << "Product Type: " << info.productType << endl;
+            cout << "CNIC: " << info.cnic << endl;
             cout << "Initial Price: " << info.initialPrice << endl;
+        }
+    }
+}
+void ShowSummary(ProductInfo info)
+{
+    ifstream read("history.txt");
+    if (!read.is_open())
+    {
+        cout << "File Not Opened.";
+    }
+    else
+    {
+        while (read >> info.no)
+        {
+            read.ignore();
+            getline(read, info.name);
+            getline(read, info.productName);
+            getline(read, info.productType);
+            getline(read, info.cnic);
+            read >> info.initialPrice;
+            read >> info.finalPrice;
+
+            read.ignore();
+
+            cout << info.no << endl;
+            cout << "Name: " << info.name << endl;
+            cout << "Product Name: " << info.productName << endl;
+            cout << "Product Type: " << info.productType << endl;
+            cout << "CNIC: " << info.cnic << endl;
+            cout << "Initial Price: " << info.initialPrice << endl;
+            cout << "Sold Price: " << info.finalPrice << endl;
         }
     }
 }
 int main()
 {
 
-    ProductInfo product[MAX_REC];
+    ProductInfo product;
     ofstream write;
     ifstream read;
     int find, f;
@@ -203,12 +252,9 @@ int main()
             ShowAllProduct(product);
             break;
         case 4:
-            ShowSummary();
-            break;
-        case 5:
-            exit(0);
+            ShowSummary(product);
             break;
         }
 
-    } while (choice != 0);
+    } while (choice != 5);
 }

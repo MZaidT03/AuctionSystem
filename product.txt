@@ -1,18 +1,10 @@
-1
-M Zaid
-Car
-Automobile
-34102456576
-1200
-2
-Ali Hassan
+0 M Zaid
 Macbook
-laptop
-343512345
-1000
-3
-Muhammad
-Phone
-phone
-3456765434
+Tech
+4567543567
+1200
+1 M Saroosh
+Samsung S20 Ultra
+Tech
+3434564325
 1000
