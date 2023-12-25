@@ -1,10 +1,6 @@
-0 M Zaid
-Macbook
-Tech
-4567543567
-1200
-1 M Saroosh
-Samsung S20 Ultra
-Tech
-3434564325
-1000
+2 M Zaid
+PC
+Electronics
+34567654
+12000
+12/12/2023
