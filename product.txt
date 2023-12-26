@@ -1,6 +1,24 @@
 2 M Zaid
 PC
-Electronics
+pc
 34567654
 12000
-12/12/2023
+12/12/2003
+3 M Zaid
+Macbook
+Electronics
+34101-5753851-7
+145000
+26/12/2023
+4 M Saroosh Tahir
+Samsung S20
+Electronics
+34101-5888999-5
+110000
+26/12/2023
+5 Mehrwish
+Bed Set
+Furniture
+34101-3181191-9
+95000
+26/12/2023

@@ -3,6 +3,7 @@
 #include <fstream>
 
 using namespace std;
+
 struct Date
 {
     int day, month, year;
@@ -16,7 +17,7 @@ struct ProductInfo
 };
 void writeNumRecToFile(int numRec)
 {
-    ofstream write("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/num_rec.txt");
+    ofstream write("/Users/mzaidt/Documents/PF (UET)/Auction_System/num_rec.txt");
     if (write.is_open())
     {
         write << numRec << endl;
@@ -27,7 +28,7 @@ void writeNumRecToFile(int numRec)
 int readNumRecFromFile()
 {
     int numRec = 0;
-    ifstream read("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/num_rec.txt");
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/num_rec.txt");
     if (read.is_open())
     {
         read >> numRec;
@@ -49,18 +50,19 @@ void header()
 void menu()
 {
     cout << " ___________________________________________" << endl;
-    cout << "|       1. Add Product                      |" << endl;
-    cout << "|       2. Start Auction                    |" << endl;
-    cout << "|       3. Show All Products                |" << endl;
-    cout << "|       4. Show Products(According Category)|" << endl;
-    cout << "|       5. Show Summary(Sold Products)      |" << endl;
-    cout << "|       6. Delete A Record                  |" << endl;
-    cout << "|       7. Exit                             |" << endl;
+    cout << "|     1. Add Product                        |" << endl;
+    cout << "|     2. Start Auction                      |" << endl;
+    cout << "|     3. Show All Products                  |" << endl;
+    cout << "|     4. Filter Products(According Category)|" << endl;
+    cout << "|     5. Filter Products(According Date)    |" << endl;
+    cout << "|     6. Show Summary(Sold Products)        |" << endl;
+    cout << "|     7. Delete A Record                    |" << endl;
+    cout << "|     8. Exit                               |" << endl;
     cout << "|___________________________________________|" << endl;
 }
 void AddProduct(ProductInfo info, int NUM_REC)
 {
-    ofstream write("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt", ios::app);
+    ofstream write("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt", ios::app);
     info.no = NUM_REC;
     cin.ignore();
     cout << "Enter Your Name: ";
@@ -95,9 +97,9 @@ void AddProduct(ProductInfo info, int NUM_REC)
 }
 void startAuction(ProductInfo &info, string productName)
 {
-    ofstream writeHistory("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/history.txt", ios::app);
-    ifstream readProduct("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
-    ofstream writeTemp("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/temp.txt");
+    ofstream writeHistory("/Users/mzaidt/Documents/PF (UET)/Auction_System/history.txt", ios::app);
+    ifstream readProduct("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
+    ofstream writeTemp("/Users/mzaidt/Documents/PF (UET)/Auction_System/temp.txt");
     if (!readProduct.is_open() || !writeHistory.is_open() || !writeTemp.is_open())
     {
         cout << "File Not Opened." << endl;
@@ -203,14 +205,14 @@ void startAuction(ProductInfo &info, string productName)
     writeHistory.close();
     writeTemp.close();
 
-    remove("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
-    rename("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/temp.txt", "/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
+    remove("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
+    rename("/Users/mzaidt/Documents/PF (UET)/Auction_System/temp.txt", "/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
 }
 
 void ShowAllProduct(ProductInfo info)
 {
     int flag = 0;
-    ifstream read("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
     if (!read.is_open())
     {
         cout << "File Not Opened." << endl;
@@ -253,7 +255,7 @@ void ShowAllProduct(ProductInfo info)
 void ShowSummary(ProductInfo info)
 {
     int flag = 0;
-    ifstream read("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/history.txt");
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/history.txt");
     if (!read.is_open())
     {
         cout << "File Not Opened." << endl;
@@ -301,8 +303,8 @@ void ShowSummary(ProductInfo info)
 }
 void deleteRecord(ProductInfo info)
 {
-    ifstream read("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
-    ofstream write("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/temp.txt");
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
+    ofstream write("/Users/mzaidt/Documents/PF (UET)/Auction_System/temp.txt");
     int flag = 0;
     string name;
     cout << "Enter Name of product that you want to delete: ";
@@ -354,14 +356,14 @@ void deleteRecord(ProductInfo info)
         }
         write.close();
         read.close();
-        remove("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
-        rename("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/temp.txt", "/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
+        remove("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
+        rename("/Users/mzaidt/Documents/PF (UET)/Auction_System/temp.txt", "/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
     }
 }
 void showProductByCategory(ProductInfo info)
 {
     int flag = 0;
-    ifstream read("/Users/mzaidt/Documents/PF (UET)/AuctionSystem-main/product.txt");
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
     string category;
     cout << "Enter Category for which you want to search the products: ";
     cin.ignore();
@@ -409,6 +411,58 @@ void showProductByCategory(ProductInfo info)
         }
     }
 }
+void showProductByDate(ProductInfo info)
+{
+    int flag = 0;
+    ifstream read("/Users/mzaidt/Documents/PF (UET)/Auction_System/product.txt");
+    Date dateToSearch;
+    cout << "Enter Specific Date for which you want to search the products(dd mm yyyy): ";
+    cin >> dateToSearch.day >> dateToSearch.month >> dateToSearch.year;
+
+    if (!read.is_open())
+    {
+        cout << "File Not Opened." << endl;
+    }
+    else
+    {
+        while (read >> info.no)
+        {
+
+            read.ignore();
+            getline(read, info.name);
+            getline(read, info.productName);
+            getline(read, info.productType);
+            getline(read, info.cnic);
+            read >> info.initialPrice;
+            read.ignore();
+            read >> info.date.day;
+            read.ignore();
+            read >> info.date.month;
+            read.ignore();
+            read >> info.date.year;
+
+            read.ignore();
+            if (dateToSearch.day == info.date.day && dateToSearch.month == info.date.month && dateToSearch.year == info.date.year)
+            {
+                flag = 1;
+                cout << info.no << endl;
+                cout << "Name: " << info.name << endl;
+                cout << "Product Name: " << info.productName << endl;
+                cout << "Product Type: " << info.productType << endl;
+                cout << "CNIC: " << info.cnic << endl;
+                cout << "Initial Price: " << info.initialPrice << endl;
+                cout << info.date.day << "/" << info.date.month << "/" << info.date.year << endl;
+
+                cout << "----------------------------------------" << endl;
+            }
+        }
+        if (flag == 0)
+        {
+            cout << "No Product found for " << dateToSearch.day << "/" << dateToSearch.month << "/" << dateToSearch.year << " Specific Date." << endl;
+        }
+    }
+}
+
 int main()
 {
 
@@ -446,20 +500,22 @@ int main()
             showProductByCategory(product);
             break;
         case 5:
-            ShowSummary(product);
+            showProductByDate(product);
             break;
         case 6:
-            deleteRecord(product);
+            ShowSummary(product);
             break;
         case 7:
+            deleteRecord(product);
+            break;
+        case 8:
             cout << "Closing The System..........";
-
             break;
         default:
             cout << "Invalid Choice";
         }
 
-    } while (choice != 7);
+    } while (choice != 8);
 
     writeNumRecToFile(NUM_REC);
 }
